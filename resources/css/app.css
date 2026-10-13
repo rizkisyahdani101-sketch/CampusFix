@@ -1,0 +1,1994 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+:root {
+    color-scheme: light;
+    --cf-canvas: #f2f7fa;
+    --cf-surface: #ffffff;
+    --cf-surface-soft: #f4f8fa;
+    --cf-ink: #17343a;
+    --cf-muted: #71838a;
+    --cf-border: #dce6ea;
+    --cf-primary: #078784;
+    --cf-primary-dark: #00666b;
+    --cf-primary-soft: #e2f4f2;
+    --cf-shadow: 0 14px 32px -28px rgba(12, 52, 63, .3);
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        color: var(--cf-ink);
+        font-family: var(--font-sans);
+    }
+
+    button,
+    a,
+    input,
+    select,
+    textarea {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+.cf-app {
+    min-height: 100vh;
+    background: var(--cf-canvas);
+    color: var(--cf-ink);
+}
+
+.cf-page {
+    width: min(100% - 2rem, 80rem);
+    margin-inline: auto;
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+}
+
+.cf-page--narrow {
+    max-width: 60rem;
+}
+
+.cf-topbar {
+    position: sticky;
+    z-index: 20;
+    top: 0;
+    border-bottom: 1px solid rgba(220, 231, 231, .9);
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 4px 18px -16px rgba(15, 61, 68, .4);
+    backdrop-filter: blur(14px);
+}
+
+.cf-topbar-inner {
+    display: flex;
+    width: min(100% - 2rem, 80rem);
+    min-height: 4.5rem;
+    margin-inline: auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+}
+
+.cf-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    flex: 0 0 auto;
+    color: var(--cf-primary);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -.04em;
+}
+
+.cf-nav {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+}
+
+.cf-nav a {
+    border-radius: 999px;
+    padding: .55rem .8rem;
+    color: #52696d;
+    font-size: .875rem;
+    font-weight: 600;
+    transition: background .18s ease, color .18s ease;
+}
+
+.cf-nav a:hover,
+.cf-nav a[aria-current="page"] {
+    background: var(--cf-primary-soft);
+    color: var(--cf-primary-dark);
+}
+
+.cf-userbar {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: .75rem;
+}
+
+.cf-user-meta {
+    display: grid;
+    gap: .1rem;
+    text-align: right;
+}
+
+.cf-user-meta strong {
+    font-size: .82rem;
+    line-height: 1.25;
+}
+
+.cf-user-meta span {
+    color: var(--cf-muted);
+    font-size: .72rem;
+}
+
+.cf-page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cf-page-title {
+    margin-top: .25rem;
+    color: var(--cf-ink);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 750;
+    letter-spacing: -.04em;
+    line-height: 1.15;
+}
+
+.cf-eyebrow {
+    color: var(--cf-primary);
+    font-size: .72rem;
+    font-weight: 750;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.cf-panel {
+    overflow: hidden;
+    border: 1px solid var(--cf-border);
+    border-radius: 1.15rem;
+    background: var(--cf-surface);
+    box-shadow: var(--cf-shadow);
+}
+
+.cf-panel--overflow-visible {
+    overflow: visible;
+}
+
+.cf-panel-body {
+    padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.cf-panel-heading {
+    border-bottom: 1px solid #e8eeee;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.cf-stat {
+    border: 1px solid var(--cf-border);
+    border-radius: 1rem;
+    background: var(--cf-surface);
+    padding: 1.15rem 1.25rem;
+    box-shadow: 0 4px 15px -13px rgba(15, 61, 68, .45);
+}
+
+.cf-stat-label {
+    color: var(--cf-muted);
+    font-size: .875rem;
+}
+
+.cf-stat-value {
+    margin-top: .35rem;
+    color: var(--cf-ink);
+    font-size: 1.9rem;
+    font-weight: 750;
+    letter-spacing: -.04em;
+}
+
+.cf-button {
+    display: inline-flex;
+    min-height: 2.65rem;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    padding: .65rem 1rem;
+    font-size: .875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+    cursor: pointer;
+}
+
+.cf-button:hover {
+    transform: translateY(-1px);
+}
+
+.cf-button:focus-visible,
+.cf-input:focus-visible,
+.cf-nav a:focus-visible {
+    outline: 3px solid rgba(13, 148, 136, .23);
+    outline-offset: 2px;
+}
+
+.cf-button--primary {
+    background: var(--cf-primary);
+    color: #fff;
+}
+
+.cf-button--primary:hover {
+    background: var(--cf-primary-dark);
+}
+
+.cf-button--secondary {
+    border-color: var(--cf-border);
+    background: #fff;
+    color: #3d595e;
+}
+
+.cf-button--secondary:hover {
+    border-color: #b8cecb;
+    background: var(--cf-surface-soft);
+}
+
+.cf-button--danger {
+    border-color: #fecaca;
+    background: #fff;
+    color: #b42318;
+}
+
+.cf-button--danger:hover {
+    background: #fff1f0;
+}
+
+.cf-button--warning {
+    border-color: #f2d29b;
+    background: #fffaf0;
+    color: #8b5e12;
+}
+
+.cf-button:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+    transform: none;
+}
+
+.cf-label {
+    display: block;
+    margin-bottom: .4rem;
+    color: #314e53;
+    font-size: .875rem;
+    font-weight: 650;
+}
+
+.cf-input,
+.cf-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.cf-form select,
+.cf-form textarea {
+    width: 100%;
+    min-height: 2.8rem;
+    border: 1px solid var(--cf-border);
+    border-radius: .75rem;
+    background: var(--cf-surface-soft);
+    padding: .7rem .9rem;
+    color: var(--cf-ink);
+    font-size: .9rem;
+    outline: none;
+    transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.cf-form textarea {
+    min-height: 6rem;
+}
+
+.cf-input::placeholder,
+.cf-form input::placeholder,
+.cf-form textarea::placeholder {
+    color: #8a9a9d;
+}
+
+.cf-input:focus,
+.cf-form input:focus,
+.cf-form select:focus,
+.cf-form textarea:focus {
+    border-color: #63aaa2;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(15, 118, 110, .1);
+}
+
+.cf-form input[type="checkbox"],
+.cf-form input[type="radio"] {
+    accent-color: var(--cf-primary);
+}
+
+.cf-form input[type="file"] {
+    width: 100%;
+    border: 1px solid var(--cf-border);
+    border-radius: .75rem;
+    background: var(--cf-surface-soft);
+    padding: .65rem;
+    font-size: .85rem;
+}
+
+.cf-form.flex input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.cf-form.flex select {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.cf-alert {
+    border: 1px solid var(--cf-border);
+    border-radius: .8rem;
+    padding: .85rem 1rem;
+    font-size: .9rem;
+}
+
+.cf-alert--success {
+    border-color: #bce7d3;
+    background: #edf9f2;
+    color: #176347;
+}
+
+.cf-alert--error {
+    border-color: #ffd0cb;
+    background: #fff3f1;
+    color: #a83227;
+}
+
+.cf-alert--warning {
+    border-color: #f1dba8;
+    background: #fff9e9;
+    color: #815c13;
+}
+
+.cf-alert--info {
+    border-color: #c5e8e5;
+    background: #edf8f7;
+    color: #17665f;
+}
+
+.cf-table-wrap {
+    overflow-x: auto;
+}
+
+.cf-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: .9rem;
+}
+
+.cf-table th {
+    background: #f6faf9;
+    color: #61777b;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.cf-table th,
+.cf-table td {
+    border-bottom: 1px solid #e8eeee;
+    padding: .85rem 1rem;
+    vertical-align: middle;
+}
+
+.cf-table tbody tr:hover {
+    background: #f8fbfa;
+}
+
+.cf-table a {
+    color: var(--cf-primary-dark);
+    font-weight: 650;
+}
+
+.cf-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: .3rem .65rem;
+    font-size: .74rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.cf-badge--member,
+.cf-badge--teal {
+    background: #e6f5f1;
+    color: #17665f;
+}
+
+.cf-badge--technician,
+.cf-badge--success {
+    background: #e9f7ee;
+    color: #1e7048;
+}
+
+.cf-badge--coordinator,
+.cf-badge--admin {
+    background: #eaf2fb;
+    color: #315f8c;
+}
+
+.cf-badge--super-admin,
+.cf-badge--danger {
+    background: #fff0ef;
+    color: #a9322a;
+}
+
+.cf-badge--warning {
+    background: #fff6df;
+    color: #805e17;
+}
+
+.cf-role-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border: 1px solid #e4ecea;
+    border-radius: .85rem;
+    background: #fbfdfc;
+    padding: 1rem;
+}
+
+.cf-empty-state {
+    border: 1px dashed #cbdad8;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, .55);
+    padding: 2.25rem 1.25rem;
+    color: var(--cf-muted);
+    text-align: center;
+}
+
+.cf-auth-page {
+    min-height: 100vh;
+    background: var(--cf-canvas);
+    color: var(--cf-ink);
+}
+
+.cf-auth-layout {
+    display: grid;
+    width: min(100% - 2.5rem, 78rem);
+    min-height: 100vh;
+    margin-inline: auto;
+    align-items: center;
+    grid-template-columns: minmax(0, 1.15fr) minmax(22rem, .85fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    padding-block: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.cf-auth-hero {
+    display: flex;
+    min-height: min(76vh, 42rem);
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid rgba(15, 118, 110, .12);
+    border-radius: 2rem;
+    background:
+        radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, .95), transparent 30%),
+        linear-gradient(145deg, #e4f5f0, #d8eff0 54%, #cae9dc);
+    padding: clamp(2rem, 5vw, 4.5rem);
+    box-shadow: var(--cf-shadow);
+}
+
+.cf-auth-kicker {
+    width: fit-content;
+    border: 1px solid rgba(15, 118, 110, .1);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .72);
+    padding: .55rem .85rem;
+    color: var(--cf-primary-dark);
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.cf-auth-hero h1 {
+    max-width: 40rem;
+    margin-top: 1.3rem;
+    color: #123a40;
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
+    font-weight: 750;
+    letter-spacing: -.065em;
+    line-height: .98;
+}
+
+.cf-auth-hero p {
+    max-width: 34rem;
+    margin-top: 1.2rem;
+    color: #60797d;
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.7;
+}
+
+.cf-campus-art {
+    position: relative;
+    min-height: 15rem;
+    margin-top: 2rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .85);
+    border-radius: 1.5rem;
+    background: #dce9eb url('../../public/images/unimed-digital-library-2.png') center / cover;
+}
+
+.cf-auth-card {
+    width: 100%;
+    max-width: 31rem;
+    justify-self: end;
+    border: 1px solid var(--cf-border);
+    border-radius: 1.4rem;
+    background: #fff;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    box-shadow: 0 24px 70px -42px rgba(15, 61, 68, .32);
+}
+
+.cf-auth-card .cf-brand {
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-size: 1.7rem;
+}
+
+.cf-auth-heading {
+    margin-bottom: 1.5rem;
+}
+
+.cf-auth-heading h2 {
+    color: var(--cf-ink);
+    font-size: 1.45rem;
+    font-weight: 750;
+    letter-spacing: -.03em;
+}
+
+.cf-mobile-copy {
+    display: none;
+}
+
+.cf-auth-heading p {
+    margin-top: .35rem;
+    color: var(--cf-muted);
+    font-size: .9rem;
+}
+
+.cf-auth-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.cf-auth-footer {
+    margin-top: 1.3rem;
+    color: var(--cf-muted);
+    font-size: .9rem;
+    text-align: center;
+}
+
+.cf-auth-footer a {
+    color: var(--cf-primary);
+    font-weight: 700;
+}
+
+/* CampusFix portal frame and Figma-aligned responsive dashboard. */
+.cf-portal-frame {
+    display: grid;
+    min-height: 100vh;
+    grid-template-columns: 15rem minmax(0, 1fr);
+}
+
+.cf-sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    border-right: 1px solid var(--cf-border);
+    background: #fff;
+    padding: 1.25rem 1rem;
+}
+
+.cf-sidebar-brand,
+.cf-auth-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    color: var(--cf-ink);
+    font-size: 1.15rem;
+    font-weight: 750;
+    letter-spacing: -.035em;
+}
+
+.cf-brand-mark {
+    position: relative;
+    display: inline-grid;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    place-items: center;
+    overflow: hidden;
+    border-radius: .6rem;
+    background: #f8fbf6;
+}
+
+.cf-brand-mark img {
+    position: absolute;
+    top: -37%;
+    left: -50%;
+    width: 200%;
+    max-width: none;
+    height: 200%;
+    object-fit: cover;
+}
+
+.cf-announcement-ticker {
+    display: flex;
+    min-height: 2.55rem;
+    align-items: center;
+    gap: .85rem;
+    overflow: hidden;
+    border-bottom: 1px solid #d8ece9;
+    background: #e8f6f3;
+    color: #17565a;
+}
+
+.cf-announcement-label {
+    display: inline-flex;
+    min-height: 2.55rem;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: .45rem;
+    background: #d9f0ec;
+    padding-inline: clamp(.8rem, 2vw, 1.4rem);
+    color: #086b6d;
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+
+.cf-announcement-window {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.cf-announcement-track {
+    display: flex;
+    width: max-content;
+    animation: cf-announcement-scroll 38s linear infinite;
+}
+
+.cf-announcement-copy {
+    flex: 0 0 auto;
+    padding-right: 3rem;
+    color: #285f62;
+    font-size: .75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.cf-announcement-ticker:hover .cf-announcement-track,
+.cf-announcement-ticker:focus-within .cf-announcement-track {
+    animation-play-state: paused;
+}
+
+@keyframes cf-announcement-scroll {
+    to { transform: translateX(-50%); }
+}
+
+.cf-side-nav {
+    display: grid;
+    gap: .3rem;
+    margin-top: 2.25rem;
+}
+
+.cf-side-nav a {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: .75rem;
+    border-radius: .75rem;
+    padding: .65rem .8rem;
+    color: #526a72;
+    font-size: .875rem;
+    font-weight: 600;
+    transition: background .18s ease, color .18s ease;
+}
+
+.cf-side-nav a:hover,
+.cf-side-nav a[aria-current="page"] {
+    background: var(--cf-primary-soft);
+    color: var(--cf-primary-dark);
+}
+
+.cf-side-icon {
+    display: grid;
+    width: 1.35rem;
+    flex: 0 0 auto;
+    place-items: center;
+    color: currentColor;
+    font-size: 1rem;
+}
+
+.cf-side-count {
+    margin-left: auto;
+    border-radius: 999px;
+    background: rgba(7, 135, 132, .12);
+    padding: .13rem .4rem;
+    color: var(--cf-primary-dark);
+    font-size: .62rem;
+    font-weight: 750;
+}
+
+.cf-sidebar-note {
+    margin-top: auto;
+    border: 1px solid #d9eeeb;
+    border-radius: 1rem;
+    background: #e9f6f4;
+    padding: 1rem;
+    color: #07545a;
+}
+
+.cf-sidebar-note strong {
+    display: block;
+    font-size: .85rem;
+    line-height: 1.35;
+}
+
+.cf-sidebar-note p {
+    margin-top: .4rem;
+    color: #55777b;
+    font-size: .75rem;
+    line-height: 1.55;
+}
+
+.cf-frame-main {
+    min-width: 0;
+}
+
+.cf-frame-topbar {
+    display: flex;
+    min-height: 4.2rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid #e3ebee;
+    background: rgba(255, 255, 255, .96);
+    padding: .7rem clamp(1rem, 3vw, 2rem);
+}
+
+.cf-frame-context {
+    color: #6e8187;
+    font-size: .82rem;
+    font-weight: 600;
+}
+
+.cf-frame-time {
+    color: #0f6064;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.cf-frame-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #708187;
+    font-size: .78rem;
+}
+
+.cf-frame-actions form {
+    margin: 0;
+}
+
+.cf-frame-actions button {
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.cf-frame-avatar {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: 999px;
+    background: #d9f0ee;
+    color: #00666b;
+    font-size: .7rem;
+    font-weight: 800;
+}
+
+/* Profile photo everywhere, with the initials shown when no photo is uploaded. */
+.cf-avatar {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--cf-primary-soft);
+    color: var(--cf-primary-dark);
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+.cf-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cf-side-avatar {
+    width: 1.35rem;
+    height: 1.35rem;
+    font-size: .55rem;
+}
+
+.cf-table-avatar {
+    width: 2rem;
+    height: 2rem;
+    font-size: .65rem;
+}
+
+.cf-profile-avatar {
+    width: 5.5rem;
+    height: 5.5rem;
+    border: 3px solid #fff;
+    box-shadow: 0 12px 28px -20px rgba(15, 61, 68, .65);
+    font-size: 1.5rem;
+}
+
+.cf-frame-content {
+    width: min(100%, 88rem);
+    margin-inline: auto;
+    padding: clamp(1.1rem, 2.7vw, 2rem);
+}
+
+.cf-frame-content > .cf-page {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cf-member-home {
+    display: grid;
+    gap: 1.2rem;
+}
+
+.cf-member-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cf-member-welcome h1 {
+    color: var(--cf-ink);
+    font-size: clamp(1.45rem, 2.5vw, 1.8rem);
+    font-weight: 760;
+    letter-spacing: -.045em;
+    line-height: 1.2;
+}
+
+.cf-member-welcome p {
+    margin-top: .35rem;
+    color: var(--cf-muted);
+    font-size: .84rem;
+}
+
+.cf-home-hero-cta {
+    display: none;
+}
+
+.cf-home-hero {
+    display: grid;
+    min-height: 10rem;
+    overflow: hidden;
+    grid-template-columns: 1.15fr .85fr;
+    border-radius: 1.15rem;
+    background: #00474e;
+    color: #fff;
+}
+
+.cf-home-hero-copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.cf-home-mobile-only,
+.cf-home-hero-icon {
+    display: none;
+}
+
+.cf-home-hero-copy span {
+    color: #a9ded8;
+    font-size: .63rem;
+    font-weight: 750;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.cf-home-hero-copy h2 {
+    max-width: 28rem;
+    margin-top: .45rem;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 750;
+    letter-spacing: -.035em;
+    line-height: 1.2;
+}
+
+.cf-home-hero-copy p {
+    margin-top: .45rem;
+    color: #c3d9db;
+    font-size: .75rem;
+}
+
+.cf-campus-photo {
+    min-height: 10rem;
+    background-color: #d6e9e7;
+    background-image: url('../../public/images/unimed-faculty-medicine.png');
+    background-position: center;
+    background-size: cover;
+}
+
+.cf-home-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .8rem;
+}
+
+.cf-home-stat {
+    display: flex;
+    min-height: 4.9rem;
+    align-items: center;
+    gap: .75rem;
+    border: 1px solid var(--cf-border);
+    border-radius: .95rem;
+    background: #fff;
+    padding: .9rem 1rem;
+}
+
+.cf-home-stat-icon {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: .7rem;
+    background: #e7f5f3;
+    color: var(--cf-primary-dark);
+}
+
+.cf-home-stat p {
+    color: #77888e;
+    font-size: .7rem;
+}
+
+.cf-home-stat strong {
+    display: block;
+    margin-top: .08rem;
+    color: var(--cf-ink);
+    font-size: 1.2rem;
+    line-height: 1.2;
+}
+
+.cf-home-stat-note {
+    display: block;
+    margin-top: .12rem;
+    color: #98a6aa;
+    font-size: .62rem;
+}
+
+.cf-home-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    margin-bottom: .65rem;
+}
+
+.cf-home-section-title h2 {
+    color: var(--cf-ink);
+    font-size: .95rem;
+    font-weight: 750;
+}
+
+.cf-home-section-title a {
+    color: var(--cf-primary-dark);
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.cf-category-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: .55rem;
+}
+
+.cf-category-card {
+    display: flex;
+    min-height: 3.3rem;
+    align-items: center;
+    gap: .5rem;
+    border: 1px solid var(--cf-border);
+    border-radius: .75rem;
+    background: #fff;
+    padding: .65rem .75rem;
+    color: #405b64;
+    font-size: .72rem;
+    font-weight: 650;
+    transition: border-color .18s ease, background .18s ease;
+}
+
+.cf-category-card:hover {
+    border-color: #9bcfca;
+    background: #f7fcfb;
+}
+
+.cf-category-card span {
+    color: var(--cf-primary);
+    font-size: 1rem;
+}
+
+.cf-home-lower {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(16rem, .8fr);
+    gap: .9rem;
+}
+
+.cf-home-list {
+    display: grid;
+    gap: .5rem;
+}
+
+.cf-home-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    border: 1px solid #e6edef;
+    border-radius: .8rem;
+    background: #fff;
+    padding: .8rem .9rem;
+}
+
+.cf-home-list-item a {
+    color: #183d45;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.cf-home-list-item p {
+    margin-top: .18rem;
+    color: #77888e;
+    font-size: .68rem;
+}
+
+.cf-home-panel {
+    border: 1px solid var(--cf-border);
+    border-radius: .95rem;
+    background: #fff;
+    padding: .95rem;
+}
+
+.cf-home-panel > h2 {
+    margin-bottom: .75rem;
+    font-size: .9rem;
+    font-weight: 750;
+}
+
+.cf-issue-detail {
+    max-width: 78rem;
+}
+
+.cf-issue-detail .cf-issue-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(18rem, .8fr);
+    align-items: start;
+    gap: 1rem;
+}
+
+.cf-issue-detail .cf-panel {
+    border-radius: 1rem;
+}
+
+.cf-report-heading h1 {
+    color: var(--cf-ink);
+}
+
+.cf-report-form {
+    display: grid;
+    gap: 1.1rem;
+}
+
+/* Public sign-in and registration screens follow the desktop/mobile Figma frames. */
+.cf-auth-page {
+    min-height: 100vh;
+    background: var(--cf-canvas);
+}
+
+.cf-auth-header {
+    display: flex;
+    min-height: 4.4rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid #e1eaed;
+    background: #fff;
+    padding-inline: max(1.25rem, calc((100% - 78rem) / 2));
+}
+
+.cf-auth-header nav {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.cf-auth-help {
+    color: #71838a;
+    font-size: .75rem;
+    font-weight: 600;
+}
+
+.cf-auth-header-action {
+    display: inline-flex;
+    min-height: 2.25rem;
+    align-items: center;
+    border: 1px solid #d9e5e8;
+    border-radius: .55rem;
+    background: #fff;
+    padding: .45rem .75rem;
+    color: #0c6f70;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.cf-auth-layout {
+    display: grid;
+    width: min(100% - 2.5rem, 76rem);
+    min-height: calc(100vh - 4.4rem);
+    align-items: center;
+    grid-template-columns: minmax(0, 1.05fr) minmax(25rem, .95fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    margin-inline: auto;
+    padding-block: 2.5rem;
+}
+
+.cf-auth-hero {
+    display: flex;
+    min-height: 35rem;
+    flex-direction: column;
+    justify-content: center;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+
+.cf-auth-kicker {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: #087f7e;
+    font-size: .72rem;
+    font-weight: 750;
+}
+
+.cf-auth-hero h1 {
+    max-width: 36rem;
+    margin-top: 1rem;
+    color: #16363d;
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    font-weight: 780;
+    letter-spacing: -.06em;
+    line-height: 1.04;
+}
+
+.cf-auth-hero p {
+    max-width: 35rem;
+    margin-top: .8rem;
+    color: #6d8188;
+    font-size: .9rem;
+    line-height: 1.6;
+}
+
+.cf-auth-campus-photo {
+    position: relative;
+    min-height: 15rem;
+    margin-top: 1.35rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #dce9eb url('../../public/images/unimed-digital-library-1.png') center / cover;
+}
+
+.cf-auth-card {
+    width: 100%;
+    max-width: 28rem;
+    justify-self: end;
+    border: 1px solid #e0e9eb;
+    border-radius: 1.1rem;
+    background: #fff;
+    padding: clamp(1.35rem, 2.5vw, 2rem);
+    box-shadow: 0 10px 34px -28px rgba(14, 55, 65, .28);
+}
+
+.cf-auth-card .cf-brand {
+    display: none;
+}
+
+.cf-auth-heading {
+    margin-bottom: 1rem;
+}
+
+.cf-auth-heading h2 {
+    color: #193941;
+    font-size: 1.22rem;
+    font-weight: 760;
+    letter-spacing: -.035em;
+}
+
+.cf-auth-heading p {
+    margin-top: .28rem;
+    color: #798b91;
+    font-size: .75rem;
+    line-height: 1.45;
+}
+
+.cf-auth-tenant {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    border: 1px solid #d8efeb;
+    border-radius: .75rem;
+    background: #e9f7f5;
+    padding: .68rem .8rem;
+    color: #126a6b;
+}
+
+.cf-auth-tenant strong {
+    display: block;
+    color: #174b50;
+    font-size: .7rem;
+}
+
+.cf-auth-tenant span {
+    display: block;
+    margin-top: .12rem;
+    color: #71898c;
+    font-size: .62rem;
+}
+
+.cf-auth-form {
+    gap: .82rem;
+    margin-top: .95rem;
+}
+
+.cf-auth-card .cf-label {
+    margin-bottom: .32rem;
+    color: #304b52;
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.cf-auth-card .cf-input,
+.cf-auth-card .cf-form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
+    min-height: 2.55rem;
+    border-radius: .65rem;
+    background: #f9fbfc;
+    padding: .6rem .75rem;
+    font-size: .74rem;
+}
+
+.cf-auth-card .cf-button {
+    min-height: 2.65rem;
+    border-radius: .55rem;
+    font-size: .78rem;
+}
+
+.cf-auth-footer {
+    margin-top: .95rem;
+    font-size: .72rem;
+}
+
+.cf-auth-footer a {
+    color: #087e80;
+}
+
+.cf-auth-guest-link {
+    display: block;
+    margin-top: .65rem;
+    color: #087e80;
+    font-size: .7rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.cf-form input[type="checkbox"],
+.cf-form input[type="radio"] {
+    accent-color: var(--cf-primary);
+}
+
+@media (max-width: 960px) {
+    .cf-portal-frame {
+        grid-template-columns: 12.5rem minmax(0, 1fr);
+    }
+
+    .cf-home-lower {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cf-auth-layout {
+        width: min(100% - 2rem, 48rem);
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.25rem;
+        padding-block: 1.5rem;
+    }
+
+    .cf-auth-hero {
+        min-height: auto;
+    }
+
+    .cf-auth-page--register .cf-auth-hero {
+        display: none;
+    }
+
+    .cf-auth-page--register .cf-auth-layout {
+        min-height: calc(100vh - 3.5rem);
+        padding-top: 1rem;
+    }
+
+    .cf-auth-hero h1 {
+        font-size: clamp(1.8rem, 7vw, 2.5rem);
+    }
+
+    .cf-auth-hero p {
+        margin-top: .45rem;
+    }
+
+    .cf-auth-campus-photo {
+        display: block;
+        min-height: 9rem;
+        margin-top: .8rem;
+    }
+
+    .cf-auth-card {
+        max-width: none;
+        justify-self: stretch;
+    }
+
+}
+
+@media (max-width: 720px) {
+    .cf-sidebar-brand {
+        font-size: 1rem;
+    }
+
+    .cf-sidebar-brand .cf-brand-mark {
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+
+    .cf-frame-content {
+        padding: .9rem .85rem 1.5rem;
+    }
+
+    .cf-member-welcome {
+        align-items: flex-start;
+    }
+
+    .cf-member-welcome .cf-button {
+        min-height: 2.35rem;
+        padding-inline: .7rem;
+        font-size: .7rem;
+    }
+
+    .cf-member-welcome > .cf-button {
+        display: none;
+    }
+
+    .cf-home-hero {
+        min-height: 0;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cf-home-hero-copy {
+        padding: 1rem;
+    }
+
+    .cf-home-desktop-only {
+        display: none !important;
+    }
+
+    .cf-home-mobile-only {
+        display: block;
+    }
+
+    .cf-home-hero-icon {
+        position: absolute;
+        top: .85rem;
+        right: .85rem;
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        color: #a8d8d2;
+    }
+
+    .cf-home-hero-copy h2 {
+        font-size: 1.25rem;
+    }
+
+    .cf-home-hero-cta {
+        display: inline-flex;
+    }
+
+    .cf-campus-photo {
+        display: block;
+        min-height: 8rem;
+    }
+
+    .cf-home-stats {
+        gap: .45rem;
+    }
+
+    .cf-home-stat {
+        min-height: 4.35rem;
+        gap: .4rem;
+        padding: .6rem;
+    }
+
+    .cf-home-stat-icon {
+        width: 1.6rem;
+        height: 1.6rem;
+    }
+
+    .cf-home-stat p {
+        font-size: .58rem;
+    }
+
+    .cf-home-stat strong {
+        font-size: 1rem;
+    }
+
+    .cf-home-stat-note {
+        display: none;
+    }
+
+    .cf-category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .cf-category-card {
+        min-height: 2.7rem;
+        justify-content: center;
+        padding: .5rem .35rem;
+        font-size: .65rem;
+    }
+
+    .cf-category-card span {
+        font-size: .85rem;
+    }
+
+    .cf-issue-detail .cf-issue-columns {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cf-auth-header {
+        min-height: 3.5rem;
+        padding-inline: 1rem;
+    }
+
+    .cf-auth-header nav {
+        gap: .65rem;
+    }
+
+    .cf-auth-help {
+        display: none;
+    }
+
+    .cf-auth-layout {
+        width: min(100% - 1.5rem, 34rem);
+        min-height: calc(100vh - 3.5rem);
+        gap: .8rem;
+        padding-block: 1rem;
+    }
+
+    .cf-auth-hero {
+        display: block;
+        min-height: auto;
+        border-radius: .95rem;
+        background: #00474e;
+        padding: .9rem 1rem;
+    }
+
+    .cf-auth-hero .cf-auth-kicker {
+        display: inline-flex;
+        color: #a5ded8;
+        font-size: .62rem;
+    }
+
+    .cf-auth-hero h1 {
+        display: block;
+        margin-top: .35rem;
+        color: #fff;
+        font-size: 1.15rem;
+        letter-spacing: -.035em;
+        line-height: 1.2;
+    }
+
+    .cf-auth-hero > p {
+        display: block;
+        margin-top: .3rem;
+        color: #c6dcdd;
+        font-size: .68rem;
+        line-height: 1.45;
+    }
+
+    .cf-auth-hero .cf-auth-campus-photo {
+        display: block;
+        min-height: 7rem;
+        margin-top: .5rem;
+    }
+
+    .cf-auth-card {
+        border: 0;
+        background: transparent;
+        padding: 1.15rem;
+        box-shadow: none;
+    }
+
+    .cf-desktop-copy {
+        display: none;
+    }
+
+    .cf-mobile-copy {
+        display: inline;
+    }
+
+    .cf-auth-form {
+        gap: .72rem;
+    }
+}
+
+@media (max-width: 880px) {
+    .cf-auth-layout {
+        max-width: 42rem;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.25rem;
+    }
+
+    .cf-auth-hero {
+        min-height: auto;
+        border-radius: 1.4rem;
+        padding: 1.5rem;
+    }
+
+    .cf-auth-hero h1 {
+        margin-top: .8rem;
+        font-size: clamp(2.1rem, 9vw, 3rem);
+    }
+
+    .cf-auth-hero p {
+        margin-top: .7rem;
+        font-size: .95rem;
+    }
+
+    .cf-auth-card {
+        max-width: none;
+        justify-self: stretch;
+    }
+}
+
+@media (max-width: 720px) {
+    .cf-topbar-inner {
+        min-height: 4rem;
+        flex-wrap: wrap;
+        gap: .35rem .75rem;
+        padding-block: .65rem;
+    }
+
+    .cf-nav {
+        order: 3;
+        width: 100%;
+        flex-basis: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: .1rem;
+    }
+
+    .cf-nav a {
+        flex: 0 0 auto;
+        font-size: .8rem;
+    }
+
+    .cf-user-meta {
+        display: none;
+    }
+
+    .cf-page {
+        width: min(100% - 1.25rem, 80rem);
+        padding-block: 1.25rem;
+    }
+}
+
+.cf-form.flex.flex-col input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.cf-form.flex.flex-col select {
+    width: 100%;
+    flex: 0 1 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        transition-delay: 0s !important;
+    }
+
+    .cf-announcement-track {
+        animation: none;
+    }
+
+    .cf-announcement-window {
+        overflow: visible;
+    }
+
+    .cf-announcement-copy {
+        white-space: normal;
+    }
+
+    .cf-announcement-copy[aria-hidden="true"] {
+        display: none;
+    }
+}
+
+/* Final responsive overrides for the public auth frames. */
+@media (max-width: 720px) {
+    .cf-auth-layout {
+        width: min(100% - 1.5rem, 34rem);
+        min-height: calc(100vh - 3.5rem);
+        gap: .8rem;
+        padding-block: 1rem;
+    }
+
+    .cf-auth-hero {
+        display: block;
+        min-height: auto;
+        border-radius: .95rem;
+        background: #00474e;
+        padding: .9rem 1rem;
+    }
+
+    .cf-auth-page--register .cf-auth-hero {
+        display: none;
+    }
+
+    .cf-auth-page--register .cf-auth-layout {
+        min-height: calc(100vh - 3.5rem);
+        padding-top: 1rem;
+    }
+
+    .cf-auth-hero .cf-auth-kicker {
+        display: inline-flex;
+        color: #a5ded8;
+        font-size: .62rem;
+    }
+
+    .cf-auth-hero h1 {
+        display: block;
+        margin-top: .35rem;
+        color: #fff;
+        font-size: 1.15rem;
+        letter-spacing: -.035em;
+        line-height: 1.2;
+    }
+
+    .cf-auth-hero > p {
+        display: block;
+        margin-top: .3rem;
+        color: #c6dcdd;
+        font-size: .68rem;
+        line-height: 1.45;
+    }
+
+    .cf-auth-hero .cf-auth-campus-photo {
+        display: block;
+        min-height: 7rem;
+        margin-top: .5rem;
+    }
+
+    .cf-auth-card {
+        border: 0;
+        background: transparent;
+        padding: 1.15rem;
+        box-shadow: none;
+    }
+
+    .cf-desktop-copy {
+        display: none;
+    }
+
+    .cf-mobile-copy {
+        display: inline;
+    }
+}
+
+/* Mobile navigation: hamburger toggle + off-canvas portal drawer. */
+.cf-nav-toggle {
+    display: none;
+    width: 2.4rem;
+    height: 2.4rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid #d9e5e8;
+    border-radius: .7rem;
+    background: #fff;
+    color: #1c4a52;
+    cursor: pointer;
+    transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.cf-nav-toggle:hover {
+    border-color: #9bcfca;
+    background: #f3fbfa;
+    color: var(--cf-primary-dark);
+}
+
+.cf-nav-toggle svg {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.cf-nav-toggle:focus-visible,
+.cf-sidebar-close:focus-visible,
+.cf-sidebar-logout button:focus-visible {
+    outline: 3px solid rgba(13, 148, 136, .23);
+    outline-offset: 2px;
+}
+
+.cf-drawer-backdrop,
+.cf-sidebar-head button,
+.cf-sidebar-user,
+.cf-sidebar-logout {
+    display: none;
+}
+
+.cf-drawer-backdrop {
+    border: 0;
+    background: none;
+    padding: 0;
+}
+
+.cf-sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+@media (max-width: 900px) {
+    .cf-js .cf-portal-frame {
+        display: block;
+    }
+
+    .cf-js .cf-nav-toggle {
+        display: inline-grid;
+    }
+
+    /* The portal sidebar becomes a slide-in drawer. Without JS it stays static. */
+    .cf-js .cf-sidebar {
+        position: fixed;
+        z-index: 60;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        width: min(19rem, 86vw);
+        height: 100dvh;
+        overflow-y: auto;
+        border-right: 1px solid var(--cf-border);
+        border-bottom: 0;
+        padding: 1rem 1rem 1.1rem;
+        box-shadow: 0 26px 60px -34px rgba(11, 46, 54, 0);
+        transform: translateX(-102%);
+        visibility: hidden;
+        transition: transform .26s cubic-bezier(.4, 0, .2, 1), box-shadow .26s ease, visibility 0s linear .26s;
+    }
+
+    .cf-js .cf-portal-frame[data-nav-open="true"] .cf-sidebar {
+        box-shadow: 0 26px 60px -30px rgba(11, 46, 54, .55);
+        transform: translateX(0);
+        visibility: visible;
+        transition: transform .26s cubic-bezier(.4, 0, .2, 1), box-shadow .26s ease, visibility 0s;
+    }
+
+    .cf-js .cf-drawer-backdrop {
+        position: fixed;
+        z-index: 55;
+        inset: 0;
+        display: block;
+        background: rgba(9, 38, 44, .45);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .26s ease, visibility .26s ease;
+    }
+
+    .cf-js .cf-portal-frame[data-nav-open="true"] .cf-drawer-backdrop {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .cf-js.cf-nav-locked,
+    .cf-js.cf-nav-locked body {
+        overflow: hidden;
+    }
+
+    .cf-js .cf-sidebar-head button {
+        display: inline-grid;
+        width: 2.3rem;
+        height: 2.3rem;
+        flex: 0 0 auto;
+        place-items: center;
+        border: 1px solid #dfe9ea;
+        border-radius: .7rem;
+        background: #fff;
+        color: #4b676d;
+        cursor: pointer;
+    }
+
+    .cf-js .cf-sidebar-head button svg {
+        width: 1.05rem;
+        height: 1.05rem;
+    }
+
+    .cf-js .cf-sidebar-user {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        margin-top: 1.15rem;
+        border: 1px solid #e2edec;
+        border-radius: .85rem;
+        background: #f6fbfa;
+        padding: .7rem .8rem;
+    }
+
+    .cf-js .cf-sidebar-user strong {
+        display: block;
+        font-size: .8rem;
+        line-height: 1.3;
+    }
+
+    .cf-js .cf-sidebar-user span {
+        display: block;
+        margin-top: .1rem;
+        color: var(--cf-muted);
+        font-size: .68rem;
+    }
+
+    .cf-js .cf-side-nav {
+        display: grid;
+        gap: .3rem;
+        overflow: visible;
+        margin-top: 1rem;
+        padding-bottom: 0;
+    }
+
+    .cf-js .cf-side-nav a {
+        min-height: 2.7rem;
+        flex: 0 1 auto;
+        gap: .75rem;
+        padding: .6rem .8rem;
+        font-size: .85rem;
+    }
+
+    .cf-js .cf-side-icon {
+        width: 1.35rem;
+        font-size: 1rem;
+    }
+
+    .cf-js .cf-sidebar-note {
+        display: block;
+    }
+
+    .cf-js .cf-sidebar-logout {
+        display: block;
+        padding-top: 1rem;
+    }
+
+    .cf-js .cf-sidebar-logout button {
+        display: inline-flex;
+        width: 100%;
+        min-height: 2.55rem;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #f0d5d2;
+        border-radius: .75rem;
+        background: #fff;
+        color: #b42318;
+        font-size: .82rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    /* Frame top bar: hamburger, truncated title, compact actions. */
+    .cf-js .cf-frame-topbar {
+        min-height: 3.5rem;
+        gap: .6rem;
+        padding: .55rem .9rem;
+    }
+
+    .cf-js .cf-frame-context {
+        display: block;
+        min-width: 0;
+        flex: 1 1 auto;
+        overflow: hidden;
+        color: #3f5b63;
+        font-size: .8rem;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .cf-js .cf-frame-actions {
+        width: auto;
+        flex: 0 0 auto;
+        gap: .45rem;
+        font-size: .72rem;
+    }
+
+    .cf-js .cf-frame-date,
+    .cf-js .cf-frame-logout {
+        display: none;
+    }
+
+    .cf-js .cf-frame-content {
+        padding: .9rem .85rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cf-js .cf-frame-time {
+        display: none;
+    }
+
+    .cf-page-title {
+        font-size: 1.6rem;
+    }
+}
+
+.cf-table-wrap {
+    scrollbar-width: thin;
+}
